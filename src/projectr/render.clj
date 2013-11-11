@@ -171,8 +171,8 @@
                   (draw-sprite! state sprite-batch sprite position inertia))
                 (concat (vals players) symbols emanations)))
 
-    #_(draw-polies! state poly-batch "building.png" (buildings-cache state))
-    (draw-triags! state poly-batch "building.png" (btriags-cache state))
+    (draw-polies! state poly-batch "building.png" (buildings-cache state))
+    #_(draw-triags! state poly-batch "building.png" (btriags-cache state))
 
     ; debug drawings
     (draw-triags! state poly-batch "turquoise.png" (apply concat (vals debug-triags)))

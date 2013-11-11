@@ -2,7 +2,9 @@
 
 A Clojure augmented reality simulation prototype. Currently both generating `src/clj_projectr/world.clj` (in the future
         simulating) the data and consuming it with libgdx `src/clj_projectr/core.clj`. Use `lein
-run` to execute. Currently drawing ways as vectors and dummy monster.
+run` to execute.
+
+A motivational essay and presentation can be found `doc/`.
 
 A clojure plugin for Eclipse is [Counterclockwise](https://code.google.com/p/counterclockwise/). Most other environments are supported as well.
 

@@ -1,0 +1,82 @@
+#+Title: Geoglyphs fp-prototype
+#+Author: Christian Weilbach
+#+Email: slimer@polyc0l0r.net
+
+#+OPTIONS: reveal_center:t reveal_progress:t reveal_history:nil reveal_control:t
+#+OPTIONS: reveal_mathjax:t reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: reveal_width:1200 reveal_height:500
+#+OPTIONS: toc:nil
+#+REVEAL_MARGIN: 0.1
+#+REVEAL_MIN_SCALE: 0.9
+#+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_TRANS: cube
+# +REVEAL_THEME: moon
+#+REVEAL_HLEVEL: 1
+#+REVEAL_HEAD_PREAMBLE: <meta name="description" content="Geoglyph FP-prototype.">
+# +REVEAL_PREAMBLE: Applied to lambda
+# +REVEAL_POSTAMBLE: <p> Geoglyphs FP-prototype by C. Weilbach </p>
+
+* Motivation
+** Businezz goals
+   - "More bang for the buck."
+   - *Features*: easy to add and adapt
+   - *Reliability*: developer confidence in code
+   - *Speed/Turnover time:* hack new feature in hours
+
+** /THE/ problem
+   - *Incidental complexity*
+   - *~50%* of software projects /never/ delivered
+   - Even /agile methods/ and /TDD/ *don't* reduce complexity in themselves
+   - The /older/ the project, the /more/ time is spent on *refactoring*
+   - Complexity *cannot be abstracted away easily after the fact*
+
+** In technical terms
+   - Every program is a *state machine* (discrete graph).
+   - /Combinatorical number/ of states and transitions *determine* complexity.
+   - Why not reduce state machine (space of states) to reduce complexity?
+   - Less /mutable state/ (vars) => less /transitions and states/.
+   - Functional proramming does *exactly* that (immutable values)
+
+** Objections
+   - Functional programming is an /abstraction/, hardware has mutable memory.
+   - Criticisms:
+     - *performance*
+     - developer availability (your fault :-P !)
+     - artificial *intellectual/academic/theoretic* stuff to learn (developer is not free)
+
+* Case study on gaming
+  - Games are applications on steroids
+  - Good /stress test/ of functional abstractions
+  - FP is the *totality* of all state-reducing abstractions.
+  - If we can build games with FP *=> winning*
+
+** Objective
+  - build /comparable/ prototype to imperative Java/Python/unity version
+  - leverage FP to compete
+  - use *live-coding* as tightest feedback-loop for development and put
+    the developer in total control of the environment: *LISP*
+  - perform /reasonable/
+  - make /distribution/ and /parallel computing/ a breeze
+
+** Setup
+  - Be as /functional as possible/ and /pragmatic as necessary/
+  - *Clojure* runs on JVM, benefits of JVM, but:
+  - nice /value-based/ programming (immutable) by default
+  - *libgdx* for side-effects (io, graphics, sound)
+  - Most code pure, could run in *ClojureScript* (Browser) as well
+
+** Design
+  - Coordinate writes in single /STM/ (like db) transaction (only *one*
+    point of *time/update/state-transitions*)
+  - Calculate values/updates in *pure functions*
+  - Make state *first class* (first value passed to pure functions)
+  - Use *caching/memoization* to boost performance
+  - Since state is a (serializable) value, *distribution and
+    parallelisation* are for *free*
+
+* Demo
+
+* Sources
+ - "Out of the Tar Pit" by Shaffner. 2006.
+ - Prototype design study including 24 further sources:
+   https://github.com/ghubber/clj-projectr/blob/master/doc/motivation.pdf
