@@ -120,7 +120,6 @@
         app (LwjglApplication. listener cfg)
         input (create-input-processor state)]
     (set! (.-title cfg) "ProjectR Simulation Client")
-    (set! (.-useGL20 cfg) true)
     (set! (.-width cfg) (res :x))
     (set! (.-height cfg) (res :y))
     (set! (.-forceExit cfg) false)

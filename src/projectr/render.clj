@@ -2,7 +2,7 @@
   (:use [clojure.math.numeric-tower :as math]
         [clojure.string :only [split-lines]])
   (:import [com.badlogic.gdx Gdx]
-           [com.badlogic.gdx.graphics GL10 OrthographicCamera Texture]
+           [com.badlogic.gdx.graphics GL20 OrthographicCamera Texture]
            [com.badlogic.gdx.graphics.g2d SpriteBatch PolygonSpriteBatch PolygonRegion PolygonSprite TextureRegion BitmapFont]
            [com.badlogic.gdx.graphics.glutils ShapeRenderer$ShapeType]))
 
@@ -40,7 +40,7 @@
 
 (defn clear-plane! []
   (.glClearColor Gdx/gl 0.2 0.2 0.2 1)
-  (.glClear Gdx/gl GL10/GL_COLOR_BUFFER_BIT))
+  (.glClear Gdx/gl GL20/GL_COLOR_BUFFER_BIT))
 
 
 (defn update-camera! [state]
@@ -107,11 +107,14 @@
                   (doall (map #(.draw (PolygonSprite.
                                        (PolygonRegion.
                                         text-region
-                                        ^floats %))
+                                        ^floats %
+                                        (short-array (map short [0 1 2]))))
                                       poly-batch)
                               triags)))
                 triagss)))
   (.end poly-batch))
+
+
 
 (defn- draw-polies!
   "Call with polys in game coordinates. Use texture to draw all polys which have to be flat float arrays."
@@ -120,7 +123,8 @@
   (doall (map #(.draw (PolygonSprite.
                        (PolygonRegion.
                         (TextureRegion. (texture-cache state sprite))
-                        ^floats %))
+                        ^floats %
+                        (short-array (map short (range (count %))))))
                       poly-batch)
               polies))
   (.end poly-batch))
@@ -154,7 +158,7 @@
          {^BitmapFont font ::font} :volatile} @state]
     (.begin sprite-batch)
     (.setColor font (float 1) (float 1) (float 1) (float 1))
-    (doall (map #(.draw font sprite-batch %1 10 %2)
+    (doall (map #(.draw font sprite-batch %1 (float 10) (float %2))
                 (split-lines (hud @state))
                 (map #(- height 10 (* % 30)) (range 0 30))))
     (.end sprite-batch)))
@@ -171,8 +175,8 @@
                   (draw-sprite! state sprite-batch sprite position inertia))
                 (concat (vals players) symbols emanations)))
 
-    (draw-polies! state poly-batch "building.png" (buildings-cache state))
-    #_(draw-triags! state poly-batch "building.png" (btriags-cache state))
+    #_(draw-polies! state poly-batch "building.png" (buildings-cache state))
+    (draw-triags! state poly-batch "building.png" (btriags-cache state))
 
     ; debug drawings
     (draw-triags! state poly-batch "turquoise.png" (apply concat (vals debug-triags)))

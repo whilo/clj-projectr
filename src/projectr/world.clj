@@ -72,6 +72,7 @@
         (zip-xml/xml-> way :tag)))
 
 
+
 (defn- bounding-box [polies]
   (let [xs (map :x polies)
         ys (map :y polies)]
